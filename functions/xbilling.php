@@ -132,10 +132,11 @@ function registerUser(){
         }                
         if($post_parms){
             $xmws->SetRequestData($post_parms);
-            $res = $xmws->XMLDataToArray($xmws->Request($xmws->BuildRequest()));
+            $answer = $xmws->Request($xmws->BuildRequest());//save in a new variable the error like: Please provide a valid username.
+            $res = $xmws->XMLDataToArray($answer);
         }
         if ($res['xmws']['response'] != '1101') {
-            die("API Error: " . $res['xmws']['content']);
+            die("API Error: " . $res['xmws']['content']. $answer);// show the error added
         }
         
         $ret['error'] = 0;
